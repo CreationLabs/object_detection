@@ -5,8 +5,7 @@ clc;
 a = [2,4,5,13,18,22,23,25,29,32,33,38,41,42,44,50,51,59,65,66,67,69,75,77,78,83,86,87,90,91,92,96,97,98,99,108,109,119,120,121,123,131,136,144,145,148,150,153,155,156,157,161,163,164,169,170,175,177,178,184,193,194,198,199,203,209,213,214,215,216,219,224,225,236,239,242,243,253,259,266,276,288,294,303,307,316,322,326,341,354];
 fprintf('size of a is %d\n',size(a,1));
 iterator =1;
-fid = fopen('C:\Users\Karthik\Documents\aspiring researchers\test_data\expt_19.txt', 'a+');
-fprintf(fid, '%5s %5s %5s %5s %5s %5s \n', 'id', 'time', 'BB1', 'BB2', 'BB3', 'BB4');
+%fprintf(fid, '%5s %5s %5s %5s %5s %5s \n', 'id', 'time', 'BB1', 'BB2', 'BB3', 'BB4');
 
 for  iteration = 1:90
         %close all;
@@ -321,18 +320,18 @@ for  iteration = 1:90
         boxes = round(vertcat(stats(vertcat(stats.Area) > areaThreshold).BoundingBox));
 
       
-        
+        fid = fopen(strcat('C:\Users\Karthik\Documents\aspiring researchers\test_data\',num2str(a(iterator)),'.txt'), 'a+');
         for k = 1 : length(stats)
             thisBB = stats(k).BoundingBox; 
             %rectangle('Position', [thisBB(1),thisBB(2),thisBB(3),thisBB(4)], 'EdgeColor','r','LineWidth',2);
-            contents = [typecast(a(iterator), 'double'); t(iterator); thisBB(1); thisBB(2); thisBB(3); thisBB(4)];
-            fprintf(fid, '%5d %5d %5d %5d %5d %5d\n', contents);
+            contents = [thisBB(1); thisBB(2); thisBB(3); thisBB(4)];
+            fprintf(fid, '%5d %5d %5d %5d\n', contents);
             %imwrite(displayImage, strcat('C:\Users\Karthik\Documents\aspiring researchers\test_data\spr_',num2str(a(iterator)),'.jpg'));
             
         end
         
         iterator = iterator +1;
         %continue
-        
+        fclose(fid);
 end
-fclose(fid);
+
